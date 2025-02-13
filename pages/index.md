@@ -2,7 +2,6 @@
 title: Inkomsten dashboard
 ---
 
-
 ## Netto Inkomen
 
 <BarChart
@@ -47,23 +46,21 @@ title: Inkomsten dashboard
 
 
 
-
-
 ## Billabillity
 
 <BarChart
     data={fin_data_wide}
-    title='Billable % per month'
+    title='Billable % per maand'
     x=datum
-    y=billable_perc_prev_month
+    y=billable_perc_vorige_maand
     yFmt=pct0
 />
 
 <BarChart
     data={fin_data_wide}
-    title='Billable hours per month'
+    title='Billable hours per maand'
     x=datum
-    y=billable_hours_prev_month
+    y=billable_hours_vorige_maand
 />
 
 

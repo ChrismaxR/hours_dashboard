@@ -1,3 +1,51 @@
+# Personal remarks
+
+# Doelen dashboard
+
+1. Fun!
+2. Evidence.dev uitproberen
+3. Inzicht houden in mijn inkomsten & uren voor Entrador
+4. Af en toe ging wat mis mijn inkomsten, dashboard moet helpen vroegtijd gekke dingen te signaleren
+5. Beter inzicht krijgen in mijn 'marktwaarde' bij eindejaarsgesprekken met Entrador
+
+# Bronnen:
+
+Loonstrookjes (financial.csv in Hours dir) - manuele invoer o.b.v. pdfs uit NMBRS app
+Hours (TimeChimp export naar csv) - manuele actie voor export. 
+
+Deze bronnen worden opgeschoond en gejoined tot One Big Table in Inkomsten.R in Hours/code directory
+
+# Dashboard Data:
+
+Het evidence.dev dashboard gebruikt de OBT op verschillende manieren:
+
+fin_data_wide -> is de een-op-een kopie van de OBT
+fin_data_long -> OBT, maar dan long op jaar, maand, datum, kolomnaam uit OBT en bijbehorende waarde (nodig voor gestapelde bar graphs)
+fin_data_bruto -> aggregatie van alle posten (OBT kolomnamen) uit fin_data_long die tesamen bruto inkomen bepalen
+fin_data_long_out -> filtering van fin_data_long op alle posten (OBT kolomnamen) die ik afgaan van het bruto inkomen, om tot het netto inkomen te komen. 
+fin_data_bonus -> alle bonus componenten uit fin_data_long
+
+# Dashboard Design:
+
+Design moet direct gekoppeld zijn aan mijn doelen van het dashboard:
+- .md en html syntax snappen, managen van data sources en begrijpen van de documentatie
+- parameterisering van dashboard, zodat je makkelijk kan filteren en aggregeren
+- spelen met grafiektypen voor beste inzicht/visualisering
+- Layout & Shading 
+- Storytelling, kan ik met het design ook een goed verhaal vertellen?
+
+# Verdere ontwikkeling:
+
+1. Automatisering van data pipeline? Lijkt lastig, want afhankelijk van manuele acties. Maar tussenstap kan zijn om data in sqlite/duckdb te stoppen
+2. Dashboard design:
+	betere visuals: layout, paginering, kleurstelling en grafiektype-keuzen
+	betere as-titels: uniformiteit en juiste niveau
+3. Datatype management: bv. jaar en ym kolommen ziet evidence.dev als numbers, terwijl ik ze strings wil laten zijn. Hoe pas ik dit aan?
+4. Customization: evidence logo eruit slopen
+
+
+
+
 # Evidence Template Project
 
 ## Using Codespaces

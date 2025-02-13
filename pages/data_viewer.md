@@ -1,9 +1,14 @@
 ---
-title: Inkomsten dashboard
+title: Data Viewer
 ---
 
-```sql fin_data
-select * from fin_data
+```sql fin_data_wide
+select * from fin_data_wide
+
+```
+
+```sql fin_data_long
+select * from fin_data_long
 
 ```
 
@@ -14,8 +19,8 @@ select datum, sum(value) as bruto_bedrag
   select * 
     from fin_data_long
    where name in (
-    'gross_salary', 'hour_bonus', 'tariff_bonus', 'holiday_bonus', 'holiday',
-    'expenses', 'mobility_allowance',  'plaatsingsbonus', 'aanbrengbonus'
+    'salaris', 'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'vakantiebijslag',
+    'onkosten', 'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
   )
  )
 group by datum
@@ -25,13 +30,13 @@ group by datum
 ```sql fin_data_long_out
 select * from fin_data_long
 where name in (
-   'car', 'pension', 'inhouding'
+   'leaseauto', 'pensioen', 'inhoudingen', 'loonheffing'
 )
 ```
 
 ```sql fin_data_bonus
 select * from fin_data_long
 where name in (
-   'hour_bonus', 'tariff_bonus', 'holiday_bonus', 'aanbrengbonus', 'plaatsingsbonus'
+   'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'aanbrengbonus', 'plaatsingsbonus'
 )
 ```
