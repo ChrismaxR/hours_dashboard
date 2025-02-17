@@ -2,6 +2,22 @@
 title: Inkomsten dashboard
 ---
 
+```sql jaar_selector
+select 
+    jaar
+from finhours.fin_wide
+
+group by 1
+```
+
+<Dropdown
+    name=geselecteerd_jaar
+    data={jaar_selector}
+    value=jaar
+>
+    <DropdownOption value="%" valueLabel="All Items"/>
+</Dropdown>
+
 ## Netto Inkomen
 
 <BarChart
@@ -9,12 +25,8 @@ title: Inkomsten dashboard
     title='Netto inkomsten per maand'
     x=datum
     y=netto_salaris
-    yFmt=eur>
-    <ReferenceArea xMin='2022-01-01' xMax='2022-12-31' label=2022 color=#092635/>
-    <ReferenceArea xMin='2023-01-01' xMax='2023-12-31' label=2023 color=#9EC8B9/>
-    <ReferenceArea xMin='2024-01-01' xMax='2024-12-31' label=2024 color=#092635/>
-    <ReferenceArea xMin='2025-01-01' xMax='2025-12-31' label=2025 color=#9EC8B9/>
-</BarChart>
+    yFmt=eur
+/>
 
 ## Loonstrook details
 
@@ -66,12 +78,12 @@ title: Inkomsten dashboard
 
 
 ```sql fin_data_wide
-select * from fin_data_wide
-
+select * from finhours.fin_wide
+where jaar like '${inputs.geselecteerd_jaar.value}'
 ```
 
 ```sql fin_data_long
-select * from fin_data_long
+select * from finhours.fin_long
 
 ```
 
@@ -80,26 +92,30 @@ select * from fin_data_long
 select datum, sum(value) as bruto_bedrag 
  from (
   select * 
-    from fin_data_long
+    from finhours.fin_long
    where name in (
     'salaris', 'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'vakantiebijslag',
     'onkosten', 'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
   )
  )
+where jaar like '${inputs.geselecteerd_jaar.value}'
 group by datum
 
 ```
 
 ```sql fin_data_long_out
-select * from fin_data_long
+select * from finhours.fin_long
 where name in (
    'leaseauto', 'pensioen', 'inhoudingen', 'loonheffing'
 )
+and jaar like '${inputs.geselecteerd_jaar.value}'
 ```
 
 ```sql fin_data_bonus
-select * from fin_data_long
+select * from finhours.fin_long
 where name in (
    'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'aanbrengbonus', 'plaatsingsbonus'
 )
+and jaar like '${inputs.geselecteerd_jaar.value}'
 ```
+
