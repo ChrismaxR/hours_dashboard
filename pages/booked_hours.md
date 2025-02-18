@@ -24,7 +24,14 @@ group by 1
 
 select * from finhours.fin_long
 where name in (
-     'educatie',                                        'part_time',                                        'vakantieverlof',                                  'inzet',                                            'intern_overleg',                                  'bijzonder_verlof',                                 'nationale_feestdag',                              'ziek',                                             'betaald_ouderschapsverlof_christian_van_gaalen',  'onbetaald_ouderschapsverlof_christian_van_gaalen', 'dokter_tandarts'
+     'Educatie',                                        'Part-time',                                        'Vakantieverlof',                                  'Inzet',                                            
+     'Intern overleg', 
+     'Bijzonder verlof',
+     'Nationale feestdag',
+     'Ziek',
+     'Betaald ouderschapsverlof',
+     'Onbetaald ouderschapsverlof',
+     'Dokter / tandarts'
 )
 and jaar like '${inputs.geselecteerd_jaar.value}'
 
@@ -37,3 +44,26 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
     y=value
     series=name
 />
+
+## Billabillity
+
+<LineChart
+    data={fin_data_wide}
+    title='Billable % per maand'
+    x=datum
+    y=billable_perc_vorige_maand
+    yFmt=pct0
+/>
+
+<BarChart
+    data={fin_data_wide}
+    title='Billable hours per maand'
+    x=datum
+    y=billable_hours_vorige_maand
+/>
+
+
+```sql fin_data_wide
+select * from finhours.fin_wide
+where jaar like '${inputs.geselecteerd_jaar.value}'
+```
