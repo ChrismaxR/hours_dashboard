@@ -2,18 +2,18 @@
 
 # Doelen dashboard
 
-1. Fun!
+1. Shits 'n giggles
 2. Evidence.dev uitproberen
-3. Inzicht houden in mijn inkomsten & uren voor Entrador
+3. Inzicht houden in mijn inkomsten & uren voor werk
 4. Af en toe ging wat mis mijn inkomsten, dashboard moet helpen vroegtijd gekke dingen te signaleren
-5. Beter inzicht krijgen in mijn 'marktwaarde' bij eindejaarsgesprekken met Entrador
+5. Beter inzicht krijgen in mijn 'marktwaarde' bij eindejaarsgesprekken met werk
 
 # Bronnen:
 
 Loonstrookjes (financial.csv in Hours dir) - manuele invoer o.b.v. pdfs uit NMBRS app
 Hours (TimeChimp export naar csv) - manuele actie voor export. 
 
-Deze bronnen worden opgeschoond en gejoined tot One Big Table in Inkomsten.R in Hours/code directory
+Deze bronnen worden opgeschoond en gejoined tot One Big Table (OBT) in Inkomsten.R in Hours/code directory
 
 # Dashboard Data:
 

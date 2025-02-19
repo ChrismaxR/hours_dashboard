@@ -1,5 +1,5 @@
 ---
-title: Inkomsten dashboard
+title: Loonstrook
 ---
 
 ```sql jaar_selector
@@ -18,44 +18,39 @@ group by 1
     <DropdownOption value="%" valueLabel="All Items"/>
 </Dropdown>
 
-## Netto Inkomen
+    <LineChart
+        data={brutonetto}
+        title='Bruto vs. netto salaris'
+        x=datum
+        y=summed_value
+        series=category
+        yFmt=eur
+        step=false
+        markers=true
+    />
 
-<BarChart
-    data={fin_data_wide}
-    title='Netto inkomsten per maand'
-    x=datum
-    y=netto_salaris
-    yFmt=eur
-/>
 
-## Loonstrook details
+<Grid cols=2>
 
-<BarChart
-    data={fin_data_bruto}
-    title='Loonstrook - Bruto inkomsten'
-    x=datum
-    y=bruto_bedrag
-    yFmt=eur
-/>
+    <BarChart
+        data={fin_data_bonus}
+        title='Bonussen'
+        x=datum
+        y=value
+        series=name
+        yFmt=eur
+    />
 
-<BarChart
-    data={fin_data_long_out}
-    title='Loonstrook - afdrachten'
-    x=datum
-    y=value
-    series=name
-    yFmt=eur
-/>
+    <BarChart
+        data={fin_data_long_out}
+        title='Afdrachten'
+        x=datum
+        y=value
+        series=name
+        yFmt=eur
+    />
 
-<BarChart
-    data={fin_data_bonus}
-    title='Loonstrook - bonus'
-    x=datum
-    y=value
-    series=name
-    yFmt=eur
-/>
-
+</Grid>
 
 
 
@@ -101,3 +96,36 @@ where name in (
 and jaar like '${inputs.geselecteerd_jaar.value}'
 ```
 
+```sql brutonetto
+with nettobruto as (
+    select  jaar,
+            maand,
+            ym,
+            datum,
+            name, 
+            case
+                when name in ('netto_salaris') then 'netto'
+                else 'bruto' 
+            end as category,
+            value
+
+    from finhours.fin_long
+  	where name in (
+        'netto_salaris', 'salaris', 'urenbonus', 'tariefbonus', 
+        'vakantiebijslagbonus', 'vakantiebijslag', 'onkosten', 
+        'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
+    )
+    and jaar like '${inputs.geselecteerd_jaar.value}'
+)
+
+select  jaar,
+        maand, 
+        ym,
+        datum,
+        category,
+        sum(value) as summed_value
+from nettobruto
+
+group by jaar, maand, ym, datum, category
+
+```

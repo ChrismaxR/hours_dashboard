@@ -1,5 +1,5 @@
 ---
-title: Booked hours
+title: Geschreven uren
 ---
 
 
@@ -19,7 +19,6 @@ group by 1
     <DropdownOption value="%" valueLabel="All Items"/>
 </Dropdown>
 
-## Booked hours
 ```sql hours_breakdown
 
 select * from finhours.fin_long
@@ -43,25 +42,26 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
     x=datum
     y=value
     series=name
+    yFmt=num0
 />
 
-## Billabillity
 
-<LineChart
-    data={fin_data_wide}
-    title='Billable % per maand'
-    x=datum
-    y=billable_perc_vorige_maand
-    yFmt=pct0
-/>
+<Grid cols=2>
+    <AreaChart
+        data={fin_data_wide}
+        title='Billable % per maand'
+        x=datum
+        y=billable_perc_vorige_maand
+        yFmt=pct0
+    />
 
-<BarChart
-    data={fin_data_wide}
-    title='Billable hours per maand'
-    x=datum
-    y=billable_hours_vorige_maand
-/>
-
+    <BarChart
+        data={fin_data_wide}
+        title='Billable hours per maand'
+        x=datum
+        y=billable_hours_vorige_maand
+    />
+</Grid>
 
 ```sql fin_data_wide
 select * from finhours.fin_wide
