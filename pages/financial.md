@@ -1,5 +1,5 @@
 ---
-title: Loonstrook
+title:  
 ---
 
 ```sql jaar_selector
