@@ -104,8 +104,8 @@ with nettobruto as (
             datum,
             name, 
             case
-                when name in ('netto_salaris') then 'netto'
-                else 'bruto' 
+                when name in ('netto_salaris') then 'Netto'
+                else 'Bruto' 
             end as category,
             value
 

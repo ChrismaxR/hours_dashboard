@@ -1,6 +1,10 @@
 ---
 title:
 ---
+<Alert status=info>
+Deze maand: <Value data={datatable} column=datum row=1 fmt='mmm'/>, <Value data={datatable} column=jaar row=1 fmt='yyyy'/>
+</Alert>
+
 
 <Grid cols=2>
 <BigValue 
@@ -53,7 +57,7 @@ title:
 </Grid>
 
 <DataTable data={datatable}>
-	<Column id=ym title=" "/>
+	<Column id=datum title=" " fmt="mmm yyyy"/>
 	<Column id=billable_perc_vorige_maand title="% Billable" fmt=pct1/>
   <Column id=billable_hours_vorige_maand title="# Billable hours" />
   <Column id=bruto_variabel_inkomen title="Bonussen" fmt=eur />
@@ -108,6 +112,8 @@ order by datum desc
 
 ```sql datatable
 select ym, 
+       datum,
+       jaar,
        billable_perc_vorige_maand, 
        billable_hours_vorige_maand, 
        bruto_variabel_inkomen,
