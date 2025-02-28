@@ -2,7 +2,7 @@
 title:
 ---
 <Alert status=info>
-Deze maand: <Value data={datatable} column=datum row=1 fmt='mmm'/>, <Value data={datatable} column=jaar row=1 fmt='yyyy'/>
+Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data={datatable} column=jaar row=0 fmt='yyyy'/>
 </Alert>
 
 
@@ -44,27 +44,26 @@ Deze maand: <Value data={datatable} column=datum row=1 fmt='mmm'/>, <Value data=
 />
 
 <BigValue 
-  data={fin_perc_bonus} 
-  value=value
-  sparkline=datum
-  sparklineType=area
-  title="% Bonus deze maand"
-  fmt=pct1
-  comparison=verschil
-  comparisonFmt=pct1
-  comparisonTitle="vs. vorige maand"
+  data={vakantieuren} 
+  value=verlofuren_label
+  title="Vakantieverlof dit jaar"  
+  comparison=verlofuren_over
+  comparisonTitle="vakantieverlofuren over"
 />
 </Grid>
 
-<DataTable data={datatable}>
-	<Column id=datum title=" " fmt="mmm yyyy"/>
-	<Column id=billable_perc_vorige_maand title="% Billable" fmt=pct1/>
-  <Column id=billable_hours_vorige_maand title="# Billable hours" />
-  <Column id=bruto_variabel_inkomen title="Bonussen" fmt=eur />
-  <Column id=variabel_inkomen_perc title="% Bonussen" fmt=pct1 />
-	<Column id=netto_salaris title="Netto salaris" fmt=eur />
-</DataTable>
-
+<BarChart
+    data={datatable}
+    title='Netto Salaris Ontwikkeling'
+    x=datum 
+    y=netto_salaris
+    yFmt=eur>
+    <ReferenceLine 
+        data={avg_netto} 
+        y=avg 
+        label="Gemiddelde"
+    />
+</BarChart>
 
 ```sql fin_agg_netto
 select datum, 
@@ -78,12 +77,12 @@ order by datum desc
 ```
 
 ```sql fin_agg_bill_perc
-select datum, 
-  		name, 
-  		value,
-      value - LAG(value) OVER (ORDER BY datum) as verschil
+select datum,
+  	value,
+    value - LAG(value) OVER (ORDER BY datum) as verschil
   from finhours.fin_long
 where name = 'billable_perc_vorige_maand'
+and verloonde_ym is not null
 and datum > current_date - 365
 order by datum desc
 ```
@@ -120,6 +119,41 @@ select ym,
        variabel_inkomen_perc, 
        netto_salaris, 
 from finhours.fin_wide
-where datum > current_date - 330
+where datum > current_date - 365
 order by datum desc
+```
+
+```sql avg_netto
+with data as (
+  select ym, 
+       datum,
+       jaar,
+       billable_perc_vorige_maand, 
+       billable_hours_vorige_maand, 
+       bruto_variabel_inkomen,
+       variabel_inkomen_perc, 
+       netto_salaris, 
+  from finhours.fin_wide
+  where datum > current_date - 330
+  order by datum desc
+)
+
+select avg(netto_salaris) as avg
+from data
+
+```
+
+```sql vakantieuren
+with vak as (
+  select jaar, maand, ym, datum, Vakantieverlof
+from finhours.fin_wide
+  )
+
+select jaar, 
+  sum(vakantieverlof) as verlofuren,
+  cast(sum(vakantieverlof) as string) || ' uur' as verlofuren_label,
+  144 - verlofuren as verlofuren_over 
+from vak
+where jaar = cast(extract(year from current_date) as string)
+group by jaar
 ```

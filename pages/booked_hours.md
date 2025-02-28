@@ -45,7 +45,6 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
     yFmt=num0
 />
 
-
 <Grid cols=2>
     <AreaChart
         data={fin_data_wide}

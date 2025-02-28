@@ -27,7 +27,22 @@ group by 1
         yFmt=eur
         step=false
         markers=true
-    />
+        markerShape=emptyCircle>
+            <ReferenceLine 
+                data={avg_brutonetto} 
+                y=Netto 
+                label="Gemiddelde Netto" 
+                color=#27445D 
+                labelPosition="aboveStart"
+            />
+            <ReferenceLine 
+                data={avg_brutonetto} 
+                y=Bruto 
+                label="Gemiddelde Bruto" 
+                color=#27445D 
+                labelPosition="aboveStart"
+            />
+    </LineChart>
 
 
 <Grid cols=2>
@@ -48,6 +63,12 @@ group by 1
         y=value
         series=name
         yFmt=eur
+        colorPalette={[
+            '#fcdad9',
+            '#e88a87',
+            '#eb5752',
+            '#cf0d06',
+        ]}
     />
 
 </Grid>
@@ -128,4 +149,54 @@ from nettobruto
 
 group by jaar, maand, ym, datum, category
 
+```
+
+```sql avg_brutonetto
+
+WITH nettobruto AS (
+    SELECT  
+        jaar,
+        maand,
+        ym,
+        datum,
+        name, 
+        CASE
+            WHEN name IN ('netto_salaris') THEN 'Netto'
+            ELSE 'Bruto' 
+        END AS category,
+        value
+    FROM finhours.fin_long
+    WHERE name IN (
+        'netto_salaris', 'salaris', 'urenbonus', 'tariefbonus', 
+        'vakantiebijslagbonus', 'vakantiebijslag', 'onkosten', 
+        'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
+    )
+    AND jaar LIKE '${inputs.geselecteerd_jaar.value}'
+),
+
+agg1 AS (
+    SELECT  
+        jaar,
+        maand, 
+        ym,
+        datum,
+        category,
+        SUM(value) AS summed_value
+    FROM nettobruto
+    GROUP BY jaar, maand, ym, datum, category
+),
+
+avg_values AS (
+    SELECT 
+        category, 
+        AVG(summed_value) AS avg_summed_value 
+    FROM agg1 
+    GROUP BY category
+)
+
+SELECT * 
+FROM avg_values
+PIVOT (
+    any_value(avg_summed_value) FOR category IN ('Netto', 'Bruto')
+)
 ```
