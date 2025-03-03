@@ -124,30 +124,22 @@ order by datum desc
 ```
 
 ```sql avg_netto
-with data as (
-  select ym, 
-       datum,
-       jaar,
-       billable_perc_vorige_maand, 
-       billable_hours_vorige_maand, 
-       bruto_variabel_inkomen,
-       variabel_inkomen_perc, 
-       netto_salaris, 
-  from finhours.fin_wide
-  where datum > current_date - 330
-  order by datum desc
-)
-
 select avg(netto_salaris) as avg
-from data
+from (
+  select * from ${datatable}
+)
 
 ```
 
 ```sql vakantieuren
 with vak as (
-  select jaar, maand, ym, datum, Vakantieverlof
-from finhours.fin_wide
-  )
+  select jaar, 
+        maand, 
+        ym, 
+        datum, 
+        Vakantieverlof
+  from finhours.fin_wide
+)
 
 select jaar, 
   sum(vakantieverlof) as verlofuren,

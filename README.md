@@ -36,11 +36,11 @@ Design moet direct gekoppeld zijn aan mijn doelen van het dashboard:
 
 # Verdere ontwikkeling:
 
-~~1. Automatisering van data pipeline? Lijkt lastig, want afhankelijk van manuele acties. Maar tussenstap kan zijn om data in sqlite/duckdb te stoppen~~
+1. ~~Automatisering van data pipeline? Lijkt lastig, want afhankelijk van manuele acties. Maar tussenstap kan zijn om data in sqlite/duckdb te stoppen~~
 2. Dashboard design:
 	betere visuals: layout, paginering, kleurstelling en grafiektype-keuzen
 	betere as-titels: uniformiteit en juiste niveau
-~~3. Datatype management: bv. jaar en ym kolommen ziet evidence.dev als numbers, terwijl ik ze strings wil laten zijn. Hoe pas ik dit aan?~~
+3. ~~Datatype management: bv. jaar en ym kolommen ziet evidence.dev als numbers, terwijl ik ze strings wil laten zijn. Hoe pas ik dit aan?~~
 4. Customization: evidence logo eruit slopen
 
 
