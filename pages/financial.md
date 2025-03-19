@@ -31,14 +31,14 @@ group by 1
             <ReferenceLine 
                 data={avg_brutonetto} 
                 y=Netto 
-                label="Gemiddelde Netto" 
+                label="Gem. Netto" 
                 color=#27445D 
                 labelPosition="aboveStart"
             />
             <ReferenceLine 
                 data={avg_brutonetto} 
                 y=Bruto 
-                label="Gemiddelde Bruto" 
+                label="Gem. Bruto" 
                 color=#27445D 
                 labelPosition="aboveStart"
             />

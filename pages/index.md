@@ -6,7 +6,7 @@ Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data=
 </Alert>
 
 
-<Grid cols=2>
+<Grid cols=3>
 <BigValue 
   data={fin_agg_netto} 
   value=value
@@ -16,6 +16,18 @@ Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data=
   fmt=eur
   comparison=verschil
   comparisonFmt=eur
+  comparisonTitle="vs. vorige maand"
+/>
+
+<BigValue 
+  data={datatable} 
+  value=uurloon
+  sparkline=datum
+  sparklineType=area
+  title="Uurloon deze maand"
+  fmt=eur2
+  comparison=uurloon_verschil
+  comparisonFmt=eur2
   comparisonTitle="vs. vorige maand"
 />
 
@@ -61,7 +73,8 @@ Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data=
     <ReferenceLine 
         data={avg_netto} 
         y=avg 
-        label="Gemiddelde"
+        label="Gem."
+        color=#27445D
     />
 </BarChart>
 
@@ -110,16 +123,24 @@ order by datum desc
 ```
 
 ```sql datatable
-select ym, 
-       datum,
-       jaar,
-       billable_perc_vorige_maand, 
-       billable_hours_vorige_maand, 
-       bruto_variabel_inkomen,
-       variabel_inkomen_perc, 
-       netto_salaris, 
-from finhours.fin_wide
-where datum > current_date - 365
+with dt as (
+  select ym, 
+        datum,
+        jaar,
+        billable_perc_vorige_maand, 
+        billable_hours_vorige_maand, 
+        bruto_variabel_inkomen,
+        variabel_inkomen_perc, 
+        netto_salaris, 
+        netto_salaris/lag(billable_hours_vorige_maand) over (order by datum) as uurloon
+  from finhours.fin_wide
+  where datum > current_date - 365
+  order by datum desc
+)
+
+select dt.*, 
+       uurloon - lag(uurloon) over (order by datum) as uurloon_verschil
+from dt
 order by datum desc
 ```
 

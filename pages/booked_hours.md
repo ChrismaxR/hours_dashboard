@@ -46,23 +46,44 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
 />
 
 <Grid cols=2>
-    <AreaChart
+    <LineChart
         data={fin_data_wide}
         title='Billable % per maand'
         x=datum
         y=billable_perc_vorige_maand
         yFmt=pct0
-    />
+        markers=true
+        markerShape=emptyCircle>
+        <ReferenceLine
+            data={bill_avg}
+            y=bill_perc_avg
+            label=Gem.
+            color=#27445D
+        />
+    </LineChart>
 
     <BarChart
         data={fin_data_wide}
         title='Billable hours per maand'
         x=datum
-        y=billable_hours_vorige_maand
-    />
+        y=billable_hours_vorige_maand>
+        <ReferenceLine
+            data={bill_avg}
+            y=bill_avg
+            label=Gem.
+            color=#27445D
+        />
+    </BarChart>
 </Grid>
 
 ```sql fin_data_wide
 select * from finhours.fin_wide
 where jaar like '${inputs.geselecteerd_jaar.value}'
+```
+
+```sql bill_avg
+select avg(billable_hours_vorige_maand) as bill_avg,
+       avg(billable_perc_vorige_maand) as bill_perc_avg 
+  from finhours.fin_wide
+ where jaar like '${inputs.geselecteerd_jaar.value}'
 ```
