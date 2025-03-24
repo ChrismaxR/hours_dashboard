@@ -2,14 +2,6 @@
 title:  
 ---
 
-```sql jaar_selector
-select 
-    jaar
-from finhours.fin_wide
-
-group by 1
-```
-
 <Dropdown
     name=geselecteerd_jaar
     data={jaar_selector}
@@ -73,7 +65,13 @@ group by 1
 
 </Grid>
 
+```sql jaar_selector
+select 
+    jaar
+from finhours.fin_wide
 
+group by 1
+```
 
 ```sql fin_data_wide
 select * from finhours.fin_wide

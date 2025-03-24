@@ -81,7 +81,6 @@ and datum < (SELECT MAX(datum) FROM finhours.fin_long)
 
 ```
 
-
 ```sql fin_data_wide
 select * from finhours.fin_wide
 where jaar like '${inputs.geselecteerd_jaar.value}'
