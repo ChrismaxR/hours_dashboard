@@ -3,14 +3,6 @@ title:
 ---
 
 
-```sql jaar_selector
-select 
-    jaar
-from finhours.fin_wide
-
-group by 1
-```
-
 <Dropdown
     name=geselecteerd_jaar
     data={jaar_selector}
@@ -19,22 +11,6 @@ group by 1
     <DropdownOption value="%" valueLabel="All Items"/>
 </Dropdown>
 
-```sql hours_breakdown
-
-select * from finhours.fin_long
-where name in (
-     'Educatie',                                        'Part-time',                                        'Vakantieverlof',                                  'Inzet',                                            
-     'Intern overleg', 
-     'Bijzonder verlof',
-     'Nationale feestdag',
-     'Ziek',
-     'Betaald ouderschapsverlof',
-     'Onbetaald ouderschapsverlof',
-     'Dokter / tandarts'
-)
-and jaar like '${inputs.geselecteerd_jaar.value}'
-
-```
 
 <BarChart
     data={hours_breakdown}
@@ -59,6 +35,7 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
             y=bill_perc_avg
             label=Gem.
             color=#27445D
+            labelPosition="aboveStart"
         />
     </LineChart>
 
@@ -72,18 +49,50 @@ and jaar like '${inputs.geselecteerd_jaar.value}'
             y=bill_avg
             label=Gem.
             color=#27445D
+            labelPosition="aboveStart"
         />
     </BarChart>
 </Grid>
 
+```sql jaar_selector
+select 
+    jaar
+from finhours.fin_wide
+
+group by 1
+```
+
+```sql hours_breakdown
+
+select * from finhours.fin_long
+where 1=1 
+and name in (
+     'educatie',                                        'vakantieverlof',                                  'inzet',                                            
+     'intern_overleg', 
+     'bijzonder_verlof',
+     'nationale_feestdag',
+     'ziek',
+     'betaald_ouderschapsverlof',
+     'onbetaald_ouderschapsverlof',
+     'dokter_tandarts'
+)
+and jaar like '${inputs.geselecteerd_jaar.value}'
+and datum < (SELECT MAX(datum) FROM finhours.fin_long)
+
+```
+
+
 ```sql fin_data_wide
 select * from finhours.fin_wide
 where jaar like '${inputs.geselecteerd_jaar.value}'
+and datum < (SELECT MAX(datum) FROM finhours.fin_wide)
 ```
 
 ```sql bill_avg
 select avg(billable_hours_vorige_maand) as bill_avg,
        avg(billable_perc_vorige_maand) as bill_perc_avg 
   from finhours.fin_wide
- where jaar like '${inputs.geselecteerd_jaar.value}'
+ where 1=1
+ and jaar like '${inputs.geselecteerd_jaar.value}'
+and datum < (SELECT MAX(datum) FROM finhours.fin_wide)
 ```

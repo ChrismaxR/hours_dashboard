@@ -75,6 +75,7 @@ Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data=
         y=avg 
         label="Gem."
         color=#27445D
+        labelPosition="aboveStart"
     />
 </BarChart>
 
