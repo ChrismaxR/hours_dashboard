@@ -17,7 +17,7 @@ title:
     title='Uursoorten per maand'
     x=datum
     y=value
-    series=name
+    series=name_filter
     yFmt=num0
 />
 
@@ -66,16 +66,7 @@ group by 1
 
 select * from finhours.fin_long
 where 1=1 
-and name in (
-     'educatie',                                        'vakantieverlof',                                  'inzet',                                            
-     'intern_overleg', 
-     'bijzonder_verlof',
-     'nationale_feestdag',
-     'ziek',
-     'betaald_ouderschapsverlof',
-     'onbetaald_ouderschapsverlof',
-     'dokter_tandarts'
-)
+and name_filter != 'No filter'
 and jaar like '${inputs.geselecteerd_jaar.value}'
 and datum < (SELECT MAX(datum) FROM finhours.fin_long)
 
