@@ -31,11 +31,14 @@ Design moet direct gekoppeld zijn aan mijn doelen van het dashboard:
 # Verdere ontwikkeling:
 
 1. ~~Automatisering van data pipeline? Lijkt lastig, want afhankelijk van manuele acties. Maar tussenstap kan zijn om data in sqlite/duckdb te stoppen~~
-2. Dashboard design:
-	betere visuals: layout, paginering, kleurstelling en grafiektype-keuzen
-	betere as-titels: uniformiteit en juiste niveau
+2. ~~Dashboard design:~~
+	~~betere visuals: layout, paginering, kleurstelling en grafiektype-keuzen~~
+	~~betere as-titels: uniformiteit en juiste niveau~~
 3. ~~Datatype management: bv. jaar en ym kolommen ziet evidence.dev als numbers, terwijl ik ze strings wil laten zijn. Hoe pas ik dit aan?~~
 4. Customization: evidence logo eruit slopen
+5. Aanpassing index.md: 
+	- Alert Status met meta gegevens onderaan de pagina
+	- Meta gegevens uitbreiden met laatste update datum van de data
 
 
 # Evidence Template Project
