@@ -7,35 +7,35 @@ title:
     data={jaar_selector}
     value=jaar
     multiple=true
->
-    <DropdownOption value="%" valueLabel="All Items"/>
-</Dropdown>
+    defaultValue='2025'
+/>
 
-    <LineChart
-        data={brutonetto}
-        title='Bruto vs. netto salaris'
-        x=datum
-        y=summed_value
-        series=category
-        yFmt=eur
-        step=false
-        markers=true
-        markerShape=emptyCircle>
-            <ReferenceLine 
-                data={avg_brutonetto} 
-                y=Netto 
-                label="Gem. Netto" 
-                color=#27445D 
-                labelPosition="aboveStart"
-            />
-            <ReferenceLine 
-                data={avg_brutonetto} 
-                y=Bruto 
-                label="Gem. Bruto" 
-                color=#27445D 
-                labelPosition="aboveStart"
-            />
-    </LineChart>
+
+<LineChart
+    data={brutonetto}
+    title='Bruto vs. netto salaris'
+    x=datum
+    y=summed_value
+    series=category
+    yFmt=eur
+    step=false
+    markers=true
+    markerShape=emptyCircle>
+        <ReferenceLine 
+            data={avg_brutonetto} 
+            y=Netto 
+            label="Gem. Netto" 
+            color=#27445D 
+            labelPosition="aboveStart"
+        />
+        <ReferenceLine 
+            data={avg_brutonetto} 
+            y=Bruto 
+            label="Gem. Bruto" 
+            color=#27445D 
+            labelPosition="aboveStart"
+        />
+</LineChart>
 
 
 <Grid cols=2>

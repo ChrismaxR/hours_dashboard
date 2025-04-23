@@ -8,9 +8,9 @@ title:
     data={jaar_selector}
     value=jaar
     multiple=true
->
-    <DropdownOption value="%" valueLabel="All Items"/>
-</Dropdown>
+    defaultValue='2025'
+/>
+
 
 
 <BarChart
