@@ -8,7 +8,7 @@ title:
     data={jaar_selector}
     value=jaar
     multiple=true
-    defaultValue='2025'
+    selectAllByDefault=true
 />
 
 
