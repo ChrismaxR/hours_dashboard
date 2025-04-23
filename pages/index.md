@@ -2,7 +2,6 @@
 title:
 ---
 
-
 <Grid cols=3>
 <BigValue 
   data={fin_agg_netto} 
@@ -76,11 +75,9 @@ title:
     />
 </BarChart>
 
-<Alert>
-Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data={datatable} column=jaar row=0 fmt='yyyy'/>
 
-Update tijdstip data: <Value data={update_time} column=update row=0 />
-</Alert>
+Laatste update: <Value data={update_time} column=update row=0 fmt='longdate'/>
+
 
 
 ```sql fin_agg_netto

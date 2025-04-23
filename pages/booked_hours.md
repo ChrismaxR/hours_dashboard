@@ -7,6 +7,7 @@ title:
     name=geselecteerd_jaar
     data={jaar_selector}
     value=jaar
+    multiple=true
 >
     <DropdownOption value="%" valueLabel="All Items"/>
 </Dropdown>
@@ -67,14 +68,14 @@ group by 1
 select * from finhours.fin_long
 where 1=1 
 and name_filter != 'No filter'
-and jaar like '${inputs.geselecteerd_jaar.value}'
+and jaar in ${inputs.geselecteerd_jaar.value}
 and datum < (SELECT MAX(datum) FROM finhours.fin_long)
 
 ```
 
 ```sql fin_data_wide
 select * from finhours.fin_wide
-where jaar like '${inputs.geselecteerd_jaar.value}'
+where jaar in ${inputs.geselecteerd_jaar.value}
 and datum < (SELECT MAX(datum) FROM finhours.fin_wide)
 ```
 
@@ -83,6 +84,6 @@ select avg(billable_hours_vorige_maand) as bill_avg,
        avg(billable_perc_vorige_maand) as bill_perc_avg 
   from finhours.fin_wide
  where 1=1
- and jaar like '${inputs.geselecteerd_jaar.value}'
+ and jaar in ${inputs.geselecteerd_jaar.value}
 and datum < (SELECT MAX(datum) FROM finhours.fin_wide)
 ```

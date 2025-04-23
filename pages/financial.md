@@ -6,6 +6,7 @@ title:
     name=geselecteerd_jaar
     data={jaar_selector}
     value=jaar
+    multiple=true
 >
     <DropdownOption value="%" valueLabel="All Items"/>
 </Dropdown>
@@ -75,7 +76,7 @@ group by 1
 
 ```sql fin_data_wide
 select * from finhours.fin_wide
-where jaar like '${inputs.geselecteerd_jaar.value}'
+where jaar in ${inputs.geselecteerd_jaar.value}
 ```
 
 ```sql fin_data_long
@@ -94,7 +95,7 @@ select datum, sum(value) as bruto_bedrag
     'onkosten', 'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
   )
  )
-where jaar like '${inputs.geselecteerd_jaar.value}'
+where jaar in ${inputs.geselecteerd_jaar.value}
 group by datum
 
 ```
@@ -104,7 +105,7 @@ select * from finhours.fin_long
 where name in (
    'leaseauto', 'pensioen', 'inhoudingen', 'loonheffing'
 )
-and jaar like '${inputs.geselecteerd_jaar.value}'
+and jaar in ${inputs.geselecteerd_jaar.value}
 ```
 
 ```sql fin_data_bonus
@@ -112,7 +113,7 @@ select * from finhours.fin_long
 where name in (
    'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'aanbrengbonus', 'plaatsingsbonus'
 )
-and jaar like '${inputs.geselecteerd_jaar.value}'
+and jaar in ${inputs.geselecteerd_jaar.value}
 ```
 
 ```sql brutonetto
@@ -134,7 +135,7 @@ with nettobruto as (
         'vakantiebijslagbonus', 'vakantiebijslag', 'onkosten', 
         'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
     )
-    and jaar like '${inputs.geselecteerd_jaar.value}'
+    and jaar in ${inputs.geselecteerd_jaar.value}
 )
 
 select  jaar,
@@ -169,7 +170,7 @@ WITH nettobruto AS (
         'vakantiebijslagbonus', 'vakantiebijslag', 'onkosten', 
         'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
     )
-    AND jaar LIKE '${inputs.geselecteerd_jaar.value}'
+    AND jaar in ${inputs.geselecteerd_jaar.value}
 ),
 
 agg1 AS (
