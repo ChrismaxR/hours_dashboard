@@ -39,6 +39,7 @@ Design moet direct gekoppeld zijn aan mijn doelen van het dashboard:
 5. Aanpassing index.md: 
 	- Alert Status met meta gegevens onderaan de pagina
 	- Meta gegevens uitbreiden met laatste update datum van de data
+6. Betere opties om te filteren ipv een dropdown. Ik kan kiezen uit checkbox en date range.
 
 
 # Evidence Template Project

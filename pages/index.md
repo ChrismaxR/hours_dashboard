@@ -1,9 +1,6 @@
 ---
 title:
 ---
-<Alert status=info>
-Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data={datatable} column=jaar row=0 fmt='yyyy'/>
-</Alert>
 
 
 <Grid cols=3>
@@ -78,6 +75,13 @@ Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data=
         labelPosition="aboveStart"
     />
 </BarChart>
+
+<Alert>
+Deze maand: <Value data={datatable} column=datum row=0 fmt='mmm'/>, <Value data={datatable} column=jaar row=0 fmt='yyyy'/>
+
+Update tijdstip data: <Value data={update_time} column=update row=0 />
+</Alert>
+
 
 ```sql fin_agg_netto
 select datum, 
@@ -170,4 +174,8 @@ select jaar,
 from vak
 where jaar = cast(extract(year from current_date) as string)
 group by jaar
+```
+
+```sql update_time
+select max(update_date_time) as update from finhours.source_data_meta
 ```
