@@ -3,61 +3,61 @@ title:
 ---
 
 <Grid cols=3>
-<BigValue 
-  data={fin_agg_netto} 
-  value=value
-  sparkline=datum
-  sparklineType=area
-  title="Netto salaris deze maand"
-  fmt=eur
-  comparison=verschil
-  comparisonFmt=eur
-  comparisonTitle="vs. vorige maand"
-/>
+  <BigValue 
+    data={fin_agg_netto} 
+    value=value
+    sparkline=datum
+    sparklineType=area
+    title="Netto salaris deze maand"
+    fmt=eur
+    comparison=verschil
+    comparisonFmt=eur
+    comparisonTitle="vs. vorige maand"
+  />
 
-<BigValue 
-  data={datatable} 
-  value=uurloon
-  sparkline=datum
-  sparklineType=area
-  title="Uurloon deze maand"
-  fmt=eur2
-  comparison=uurloon_verschil
-  comparisonFmt=eur2
-  comparisonTitle="vs. vorige maand"
-/>
+  <BigValue 
+    data={datatable} 
+    value=uurloon
+    sparkline=datum
+    sparklineType=area
+    title="Uurloon deze maand"
+    fmt=eur2
+    comparison=uurloon_verschil
+    comparisonFmt=eur2
+    comparisonTitle="vs. vorige maand"
+  />
 
-<BigValue 
-  data={fin_agg_bill_perc} 
-  value=value
-  sparkline=datum
-  sparklineType=area
-  title="Billable % deze maand"
-  fmt=pct1
-  comparison=verschil
-  comparisonFmt=pct1
-  comparisonTitle="vs. vorige maand"
-/>
+  <BigValue 
+    data={fin_agg_bill_perc} 
+    value=value
+    sparkline=datum
+    sparklineType=area
+    title="Billable % deze maand"
+    fmt=pct1
+    comparison=verschil
+    comparisonFmt=pct1
+    comparisonTitle="vs. vorige maand"
+  />
 
-<BigValue 
-  data={fin_agg_bonus} 
-  value=value
-  sparkline=datum
-  sparklineType=area
-  title="Bonus deze maand"
-  fmt=eur
-  comparison=verschil
-  comparisonFmt=eur
-  comparisonTitle="vs. vorige maand"
-/>
+  <BigValue 
+    data={fin_agg_bonus} 
+    value=value
+    sparkline=datum
+    sparklineType=area
+    title="Bonus deze maand"
+    fmt=eur
+    comparison=verschil
+    comparisonFmt=eur
+    comparisonTitle="vs. vorige maand"
+  />
 
-<BigValue 
-  data={vakantieuren} 
-  value=verlofuren_label
-  title="Vakantieverlof dit jaar"  
-  comparison=verlofuren_over
-  comparisonTitle="vakantieverlofuren over"
-/>
+  <BigValue 
+    data={vakantieuren} 
+    value=verlofuren_label
+    title="Vakantieverlof dit jaar"  
+    comparison=verlofuren_over
+    comparisonTitle="vakantieverlofuren over"
+  />
 </Grid>
 
 <BarChart
@@ -113,16 +113,6 @@ and datum > current_date - 365
 order by datum desc
 ```
 
-```sql fin_perc_bonus
-select datum, 
-  		name, 
-  		value,
-      value - LAG(value) OVER (ORDER BY datum) as verschil
-  from finhours.fin_long
-where name = 'variabel_inkomen_perc'
-and datum > current_date - 365
-order by datum desc
-```
 
 ```sql datatable
 with dt as (

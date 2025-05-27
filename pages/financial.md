@@ -74,31 +74,6 @@ from finhours.fin_wide
 group by 1
 ```
 
-```sql fin_data_wide
-select * from finhours.fin_wide
-where jaar in ${inputs.geselecteerd_jaar.value}
-```
-
-```sql fin_data_long
-select * from finhours.fin_long
-
-```
-
-```sql fin_data_bruto
-
-select datum, sum(value) as bruto_bedrag 
- from (
-  select * 
-    from finhours.fin_long
-   where name in (
-    'salaris', 'urenbonus', 'tariefbonus', 'vakantiebijslagbonus', 'vakantiebijslag',
-    'onkosten', 'mobiliteitsvergoeding',  'plaatsingsbonus', 'aanbrengbonus'
-  )
- )
-where jaar in ${inputs.geselecteerd_jaar.value}
-group by datum
-
-```
 
 ```sql fin_data_long_out
 select * from finhours.fin_long
