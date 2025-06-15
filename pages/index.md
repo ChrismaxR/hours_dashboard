@@ -53,9 +53,9 @@ title:
 
   <BigValue 
     data={vakantieuren} 
-    value=verlofuren_label
+    value=label
     title="Vakantieverlof dit jaar"  
-    comparison=verlofuren_over
+    comparison=vakantie_uren_over
     comparisonTitle="vakantieverlofuren over"
   />
 </Grid>
@@ -92,13 +92,13 @@ order by datum desc
 ```
 
 ```sql fin_agg_bill_perc
-select datum,
-  	value,
-    value - LAG(value) OVER (ORDER BY datum) as verschil
-  from finhours.fin_long
-where name = 'billable_perc_vorige_maand'
-and verloonde_ym is not null
-and datum > current_date - 365
+ select datum,
+  	    value,
+        value - LAG(value) OVER (ORDER BY datum) as verschil
+    from finhours.fin_long
+   where 1 = 1
+     and name = 'billable_perc_vorige_maand'
+     and datum > current_date - 365
 order by datum desc
 ```
 
@@ -146,21 +146,23 @@ from (
 
 ```sql vakantieuren
 with vak as (
-  select jaar, 
+  select substring(gewerkte_ym, 1, 4) as gewerkte_jaar, 
         maand, 
-        ym, 
+        gewerkte_ym, 
         datum, 
         Vakantieverlof
   from finhours.fin_wide
+
+  where gewerkte_jaar = EXTRACT(YEAR FROM CURRENT_DATE)
 )
 
-select jaar, 
-  sum(vakantieverlof) as verlofuren,
-  cast(sum(vakantieverlof) as string) || ' uur' as verlofuren_label,
-  144 - verlofuren as verlofuren_over 
-from vak
-where jaar = cast(extract(year from current_date) as string)
-group by jaar
+select gewerkte_jaar,
+  sum(Vakantieverlof) as vakantie_uren, 
+  cast(sum(vakantieverlof) as string) || ' uur' as label,
+  144 - vakantie_uren as vakantie_uren_over
+  
+  from vak
+ group by gewerkte_jaar
 ```
 
 ```sql update_time

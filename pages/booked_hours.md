@@ -16,29 +16,17 @@ title:
 <BarChart
     data={hours_breakdown}
     title='Uursoorten per maand'
-    x=datum
-    y=value
+    x=gewerkte_datum
+    y=hours
     series=name_filter
     yFmt=num0
-        colorPalette={[
-            '#fde725',
-            '#b5de2b',
-            '#6ece58',
-            '#35b779',
-            '#1f9e89',
-            '#26828e',
-            '#31688e',
-            '#3e4989',
-            '#482777', 
-            '#440154',
-        ]}
 />
 
 
 <LineChart
     data={fin_data_wide}
     title='Billable % per maand'
-    x=datum
+    x=gewerkte_datum
     y=billable_perc_vorige_maand
     yFmt=pct0
     markers=true
@@ -77,20 +65,30 @@ group by 1
 
 ```sql hours_breakdown
 
-select * from finhours.fin_long
+select gewerkte_datum,
+  	   name_filter, 
+       sum(value) as hours
+  
+ from finhours.fin_long
 where 1=1 
 and name_filter != 'No filter'
-and jaar in ${inputs.geselecteerd_jaar.value}
-and datum < (SELECT MAX(datum) FROM finhours.fin_long)
+and value > 0
+and extract(year from gewerkte_datum) in ${inputs.geselecteerd_jaar.value}
 
-order by value desc, name
+group by 
+   gewerkte_datum, 
+   name_filter
+  
+order by 
+   gewerkte_datum, 
+   name_filter
+
 
 ```
 
 ```sql fin_data_wide
 select * from finhours.fin_wide
-where jaar in ${inputs.geselecteerd_jaar.value}
-and datum < (SELECT MAX(datum) FROM finhours.fin_wide)
+where extract(year from gewerkte_datum) in ${inputs.geselecteerd_jaar.value}
 ```
 
 ```sql bill_avg
