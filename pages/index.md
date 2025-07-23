@@ -60,12 +60,14 @@ title:
   />
 </Grid>
 
-<BarChart
+<LineChart
     data={datatable}
     title='Netto Salaris Ontwikkeling'
     x=datum 
     y=netto_salaris
-    yFmt=eur>
+    yFmt=eur
+    markers=true
+    markerShape=emptyCircle>
     <ReferenceLine 
         data={avg_netto} 
         y=avg 
@@ -73,7 +75,7 @@ title:
         color=#27445D
         labelPosition="aboveStart"
     />
-</BarChart>
+</LineChart>
 
 
 Laatste update: <Value data={update_time} column=update row=0 fmt='longdate'/>
