@@ -10,7 +10,7 @@ title: More things to worry about
     selectAllByDefault=true
 />
 
-<Grid cols=3>
+<Grid cols=4>
   <BigValue 
     data={total_bruto} 
     value=bruto_bedrag
@@ -22,6 +22,19 @@ title: More things to worry about
     data={total_netto} 
     value=netto_bedrag
     title="Totaal Netto verdiend"
+    fmt=eur
+  />
+
+  <BigValue 
+    data={total_netto} 
+    value=billed_hours
+    title="Totaal Billable uren"
+  />
+
+  <BigValue 
+    data={total_netto} 
+    value=netto_per_billed_hour
+    title="Netto per billed uur"
     fmt=eur
   />
 </Grid>
@@ -83,7 +96,9 @@ select sum(value) as bruto_bedrag
 ```
 
 ```sql total_netto
-select sum(netto_salaris) as netto_bedrag
+select sum(netto_salaris) as netto_bedrag, 
+       sum(billable_hours_vorige_maand) as billed_hours, 
+       sum(netto_salaris)/sum(billable_hours_vorige_maand) as netto_per_billed_hour
 from finhours.fin_wide
 
 where 1=1
