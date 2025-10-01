@@ -97,8 +97,8 @@ select sum(value) as bruto_bedrag
 
 ```sql total_netto
 select sum(netto_salaris) as netto_bedrag, 
-       sum(billable_hours_vorige_maand) as billed_hours, 
-       sum(netto_salaris)/sum(billable_hours_vorige_maand) as netto_per_billed_hour
+       sum(facturabele_uren_vorige_maand) as billed_hours, 
+       sum(netto_salaris)/sum(facturabele_uren_vorige_maand) as netto_per_billed_hour
 from finhours.fin_wide
 
 where 1=1

@@ -27,7 +27,7 @@ title:
     data={fin_data_wide}
     title='Billable % per maand'
     x=gewerkte_datum
-    y=billable_perc_vorige_maand
+    y=facturabele_perc_vorige_maand
     yFmt=pct0
     markers=true
     markerShape=emptyCircle>
@@ -44,7 +44,7 @@ title:
     data={fin_data_wide}
     title='Billable hours per maand'
     x=datum
-    y=billable_hours_vorige_maand>
+    y=facturabele_uren_vorige_maand>
     <ReferenceLine
         data={bill_avg}
         y=bill_avg
@@ -92,8 +92,8 @@ where extract(year from gewerkte_datum) in ${inputs.geselecteerd_jaar.value}
 ```
 
 ```sql bill_avg
-select avg(billable_hours_vorige_maand) as bill_avg,
-       avg(billable_perc_vorige_maand) as bill_perc_avg 
+select avg(facturabele_uren_vorige_maand) as bill_avg,
+       avg(facturabele_perc_vorige_maand) as bill_perc_avg 
   from finhours.fin_wide
  where 1=1
  and jaar in ${inputs.geselecteerd_jaar.value}

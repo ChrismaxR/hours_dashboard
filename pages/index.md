@@ -99,7 +99,7 @@ order by datum desc
         value - LAG(value) OVER (ORDER BY datum) as verschil
     from finhours.fin_long
    where 1 = 1
-     and name = 'billable_perc_vorige_maand'
+     and name = 'facturabele_perc_vorige_maand'
      and datum > current_date - 365
 order by datum desc
 ```
@@ -121,12 +121,12 @@ with dt as (
   select ym, 
         datum,
         jaar,
-        billable_perc_vorige_maand, 
-        billable_hours_vorige_maand, 
+        facturabele_perc_vorige_maand, 
+        facturabele_uren_vorige_maand, 
         bruto_variabel_inkomen,
         variabel_inkomen_perc, 
         netto_salaris, 
-        netto_salaris/lag(billable_hours_vorige_maand) over (order by datum) as uurloon
+        netto_salaris/lag(facturabele_uren_vorige_maand) over (order by datum) as uurloon
   from finhours.fin_wide
   where datum > current_date - 365
   order by datum desc
